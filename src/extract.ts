@@ -24,7 +24,5 @@ export const extract = (html: string): string => {
 
   const crawled: string = processing_3.html();
 
-  //
-
   return crawled;
 };

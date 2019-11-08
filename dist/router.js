@@ -19,7 +19,7 @@ const router = express_1.default.Router();
 router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield crawl_1.crawl();
     const extracted = extract_1.extract(result);
-    console.log(extracted);
+    // console.log(extracted);
     res.send(extracted);
 }));
 module.exports = router;

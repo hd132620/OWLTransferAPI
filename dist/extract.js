@@ -1,6 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const cheerio_1 = require("cheerio");
+const test_1 = require("./test");
+var Player;
+(function (Player) {
+    Player[Player["Name"] = 0] = "Name";
+    Player[Player["ID"] = 1] = "ID";
+    Player[Player["Position"] = 2] = "Position";
+    Player[Player["Nationality"] = 3] = "Nationality";
+    Player[Player["FormerTeam"] = 4] = "FormerTeam";
+})(Player || (Player = {}));
 const pretty = require('pretty');
 exports.extract = (html) => {
     if (html === '')
@@ -15,7 +24,7 @@ exports.extract = (html) => {
     const processed = processing_3.find('tr');
     processed.each((index, elem) => {
         const ic = elem.firstChild.firstChild;
-        if (index >= 2 && index !== processed.length - 1) { // 유효한 팀 범위
+        if (index >= 2 && index !== processed.length - 1) { // 유효한 룩업 범위
             console.log(index);
             if (elem.children.length === 1) { // 팀 이름
                 console.log('---------------------------------------------------');
@@ -45,9 +54,46 @@ exports.extract = (html) => {
                     console.error(error);
                 }
             }
-            else if (elem.children.length === 5 && $(this).has('style')) { // 선수 이름
+            else { // 선수 이름
+                $(elem).find('td').each((index, elemPlayer) => {
+                    switch (index) {
+                        case Player.Name: {
+                            process.stdout.write($('div', $(elemPlayer).html()).text().trim());
+                            process.stdout.write(' ');
+                            break;
+                        }
+                        case Player.ID: {
+                            process.stdout.write($('div', $(elemPlayer).html()).text().trim());
+                            process.stdout.write(' ');
+                            break;
+                        }
+                        case Player.Position: {
+                            if (elemPlayer.firstChild.firstChild.data.trim().length > 0) {
+                                process.stdout.write($('div', $(elemPlayer).html()).text().trim());
+                            }
+                            else {
+                                const prcdPosition = $('div a', $(elemPlayer).html()).attr('title');
+                                process.stdout.write(test_1.extractRole(prcdPosition));
+                            }
+                            process.stdout.write(' ');
+                            break;
+                        }
+                        case Player.Nationality: {
+                            process.stdout.write('4 ');
+                            break;
+                        }
+                        case Player.FormerTeam: {
+                            process.stdout.write('5 ');
+                            break;
+                        }
+                        default: {
+                            console.log('default');
+                        }
+                    }
+                });
             }
         }
+        console.log();
     });
     const crawled = pretty(processing_3.html());
     return crawled;

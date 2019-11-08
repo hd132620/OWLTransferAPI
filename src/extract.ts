@@ -1,4 +1,13 @@
 import { load } from 'cheerio';
+import { extractRole } from './test';
+
+enum Player {
+  Name = 0,
+  ID,
+  Position,
+  Nationality,
+  FormerTeam,
+}
 
 const pretty = require('pretty');
 
@@ -28,8 +37,7 @@ export const extract = (html: string): string => {
 
     const ic: CheerioElement = elem.firstChild.firstChild;
 
-    if (index >= 2 && index !== processed.length - 1) { // 유효한 팀 범위
-      
+    if (index >= 2 && index !== processed.length - 1) { // 유효한 룩업 범위
       console.log(index);
       if (elem.children.length === 1) { // 팀 이름
         console.log('---------------------------------------------------');
@@ -55,10 +63,46 @@ export const extract = (html: string): string => {
           console.error(error);
         }
 
-      } else if (elem.children.length === 5 && $(this).has('style')) { // 선수 이름
+      } else { // 선수 이름
 
+        $(elem).find('td').each((index: number, elemPlayer: CheerioElement) => {
+          switch (index) {
+            case Player.Name: {
+              process.stdout.write($('div', $(elemPlayer).html()).text().trim());
+              process.stdout.write(' ');
+              break;
+            }
+            case Player.ID: {
+              process.stdout.write($('div', $(elemPlayer).html()).text().trim());
+              process.stdout.write(' ');
+              break;
+            }
+            case Player.Position: {
+              if (elemPlayer.firstChild.firstChild.data.trim().length > 0) {
+                process.stdout.write($('div', $(elemPlayer).html()).text().trim());
+              } else {
+                const prcdPosition: string = $('div a', $(elemPlayer).html()).attr('title');
+                process.stdout.write(extractRole(prcdPosition));
+              }
+              process.stdout.write(' ');
+              break;
+            }
+            case Player.Nationality: {
+              process.stdout.write('4 ');
+              break;
+            }
+            case Player.FormerTeam: {
+              process.stdout.write('5 ');
+              break;
+            }
+            default: {
+              console.log('default');
+            }
+          }
+        });
       }
     }
+    console.log();
   });
 
   const crawled: string = pretty(processing_3.html());

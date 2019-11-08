@@ -28,19 +28,31 @@ export const extract = (html: string): string => {
 
     const ic: CheerioElement = elem.firstChild.firstChild;
 
-    if (index >= 2 && index !== processed.length - 1) {
+    if (index >= 2 && index !== processed.length - 1) { // 유효한 팀 범위
+      
+      console.log(index);
       if (elem.children.length === 1) { // 팀 이름
-
+        console.log('---------------------------------------------------');
         try {
           if (ic.firstChild.type === 'text') {
-            // strong 태그있음
+            // 처음에 빈 요소가 있다면
             console.log(ic.children[1].lastChild.attribs.title);
           } else if (ic.firstChild.type === 'tag') {
-            // strong 태그 없이 바로 a
-            console.log(ic.children[2].attribs.title);
-          } else {}
+            // 바로 tag가 있다면
+            if (ic.firstChild.name === 'strong') {
+              // 그 태그가 strong 태그면
+              console.log(ic.firstChild.lastChild.attribs.title);
+            } else {
+              // a 태그면 (기타의 경우)
+              console.log(ic.children[2].attribs.title);
+            }
+          } else {
+            throw new Error('Exception occured!');
+          }
         } catch (error) {
-          console.log(error);
+          console.error('Team detection error!');
+          console.error(ic.children);
+          console.error(error);
         }
 
       } else if (elem.children.length === 5 && $(this).has('style')) { // 선수 이름

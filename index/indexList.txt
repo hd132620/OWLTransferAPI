@@ -1,0 +1,123 @@
+2
+샌프란시스코 쇼크
+3
+밴쿠버 타이탄즈
+4
+뉴욕 엑셀시어
+5
+항저우 스파크
+6
+LA 글래디에이터즈
+7
+8
+9
+10
+11
+애틀랜타 레인
+12
+13
+14
+서울 다이너스티
+15
+16
+17
+18
+19
+20
+Team detection error!
+TypeError: Cannot read property 'attribs' of undefined
+    at Node.processed.each (C:\nodejs\expressPrac\OWLTransferAPI\dist\extract.js:28:52)
+    at initialize.exports.each (C:\nodejs\expressPrac\OWLTransferAPI\node_modules\cheerio\lib\api\traversing.js:300:24)
+    at Object.exports.extract (C:\nodejs\expressPrac\OWLTransferAPI\dist\extract.js:16:15)
+    at C:\nodejs\expressPrac\OWLTransferAPI\dist\router.js:21:33
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\nodejs\expressPrac\OWLTransferAPI\dist\router.js:5:58)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+21
+22
+23
+24
+25
+26
+27
+28
+상하이 드래곤즈
+29
+Team detection error!
+TypeError: Cannot read property 'attribs' of undefined
+    at Node.processed.each (C:\nodejs\expressPrac\OWLTransferAPI\dist\extract.js:28:52)
+    at initialize.exports.each (C:\nodejs\expressPrac\OWLTransferAPI\node_modules\cheerio\lib\api\traversing.js:300:24)
+    at Object.exports.extract (C:\nodejs\expressPrac\OWLTransferAPI\dist\extract.js:16:15)
+    at C:\nodejs\expressPrac\OWLTransferAPI\dist\router.js:21:33
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\nodejs\expressPrac\OWLTransferAPI\dist\router.js:5:58)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+30
+Team detection error!
+TypeError: Cannot read property 'attribs' of undefined
+    at Node.processed.each (C:\nodejs\expressPrac\OWLTransferAPI\dist\extract.js:28:52)
+    at initialize.exports.each (C:\nodejs\expressPrac\OWLTransferAPI\node_modules\cheerio\lib\api\traversing.js:300:24)
+    at Object.exports.extract (C:\nodejs\expressPrac\OWLTransferAPI\dist\extract.js:16:15)
+    at C:\nodejs\expressPrac\OWLTransferAPI\dist\router.js:21:33
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\nodejs\expressPrac\OWLTransferAPI\dist\router.js:5:58)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+31
+32
+33
+34
+35
+36
+37
+청두 헌터즈
+38
+LA 발리언트
+39
+40
+41
+42
+43
+44
+파리 이터널
+45
+46
+47
+48
+49
+50
+51
+52
+댈러스 퓨얼
+53
+54
+55
+휴스턴 아웃로즈
+56
+57
+58
+59
+60
+토론토 디파이언트
+61
+62
+63
+64
+65
+66
+67
+68
+69
+워싱턴 저스티스
+70
+71
+72
+73
+74
+보스턴 업라이징
+75
+76
+77
+78
+79
+80
+플로리다 메이헴

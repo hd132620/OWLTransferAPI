@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function extractRole(str) {
     const forming = str.split('_');
     switch (forming[forming.length - 1].split('.')[0]) {
-        case 'offence': {
+        case 'offense': {
             return '공격';
         }
         case 'tank': {

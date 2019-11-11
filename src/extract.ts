@@ -1,5 +1,5 @@
 import { load } from 'cheerio';
-import { extractRole } from './test';
+import { extractRole, extractNation } from './test';
 
 enum Player {
   Name = 0,
@@ -89,10 +89,15 @@ export const extract = (html: string): string => {
             }
             case Player.Nationality: {
               process.stdout.write('4 ');
+              $('div', $(elemPlayer).html()).find('a').each((index: number, elemPlayerNation: CheerioElement) => {
+                process.stdout.write(extractNation($(elemPlayerNation).attr('title')));
+                process.stdout.write(' ');
+              });
               break;
             }
             case Player.FormerTeam: {
               process.stdout.write('5 ');
+              process.stdout.write(' ');
               break;
             }
             default: {

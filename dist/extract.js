@@ -80,10 +80,15 @@ exports.extract = (html) => {
                         }
                         case Player.Nationality: {
                             process.stdout.write('4 ');
+                            $('div', $(elemPlayer).html()).find('a').each((index, elemPlayerNation) => {
+                                process.stdout.write(test_1.extractNation($(elemPlayerNation).attr('title')));
+                                process.stdout.write(' ');
+                            });
                             break;
                         }
                         case Player.FormerTeam: {
                             process.stdout.write('5 ');
+                            process.stdout.write(' ');
                             break;
                         }
                         default: {

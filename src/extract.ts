@@ -108,10 +108,11 @@ export const extract = (html: string): string => {
               } else {
 
                 const underDiv = $('div', $(elemPlayer).html()).children();
-
+                process.stdout.write($('div a', $(elemPlayer).html()).attr('title'));
+                
                 switch(underDiv.length) {
                   case FormerTeamFlag.Player: {
-                    process.stdout.write($('div a', $(elemPlayer).html()).attr('title'));
+                    
                     break;
                   }
                   case FormerTeamFlag.WasCoach: {

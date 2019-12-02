@@ -20,6 +20,7 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield crawl_1.crawl();
     const extracted = extract_1.extract(result);
     // console.log(extracted);
+    extracted.update();
     res.send(extracted);
 }));
 module.exports = router;

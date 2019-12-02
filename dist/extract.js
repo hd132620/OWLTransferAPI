@@ -25,7 +25,6 @@ exports.extract = (html) => {
             }
         }
     });
-    ifm.update();
     return ifm;
 };
 //# sourceMappingURL=extract.js.map

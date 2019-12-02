@@ -10,14 +10,6 @@ var FormerTeamFlag;
     FormerTeamFlag[FormerTeamFlag["WasCoach"] = 2] = "WasCoach";
     FormerTeamFlag[FormerTeamFlag["WasPlayer"] = 3] = "WasPlayer";
 })(FormerTeamFlag || (FormerTeamFlag = {}));
-var Player;
-(function (Player) {
-    Player[Player["Name"] = 0] = "Name";
-    Player[Player["ID"] = 1] = "ID";
-    Player[Player["Position"] = 2] = "Position";
-    Player[Player["Nationality"] = 3] = "Nationality";
-    Player[Player["FormerTeam"] = 4] = "FormerTeam";
-})(Player || (Player = {}));
 const $ = cheerio_1.load('');
 exports.extractPlayerName = (elemPlayer) => {
     return $('div', $(elemPlayer).html()).text().trim();

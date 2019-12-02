@@ -27,6 +27,5 @@ export const extract = (html: string): OWLTransferIfm => {
       }
     }
   });
-  ifm.update();
   return ifm;
 };

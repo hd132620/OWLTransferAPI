@@ -1,6 +1,5 @@
 import express from 'express';
 
-const router: any = express.Router();
 const app = express();
 
 app.use(require('./router'));

@@ -17,3 +17,8 @@ export function extractNation(str: string): string {
   const forming: string[] = str.split(':');
   return forming[1].split(' ')[0];
 }
+
+export function extractFormerTeam(str: string): string {
+  const forming: string[] = str.split('>');
+  return forming[forming.length - 1].trim();
+}

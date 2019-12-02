@@ -1,5 +1,5 @@
 import { load } from 'cheerio';
-import { extractRole, extractNation } from './test';
+import { extractRole, extractNation, extractFormerTeam } from './test';
 
 enum Player {
   Name = 0,
@@ -31,7 +31,7 @@ export const extract = (html: string): string => {
   // tslint:disable-next-line: variable-name
   const processing_2 = $(
       'div.clearfix > div:nth-child(1) > div.w',
-      processing_1.html()).children('div').eq(-2);
+      processing_1.html()).children('div').eq(11);
 
   // tslint:disable-next-line: variable-name
   const processing_3 = $(
@@ -71,8 +71,10 @@ export const extract = (html: string): string => {
         }
 
       } else { // 선수 이름
-
-        $(elem).find('td').each((index: number, elemPlayer: CheerioElement) => {
+        try {
+          $(elem)
+        .find('td')
+        .each((index: number, elemPlayer: CheerioElement) => {
           switch (index) {
             case Player.Name: {
               process.stdout.write($('div', $(elemPlayer).html()).text().trim());
@@ -85,7 +87,8 @@ export const extract = (html: string): string => {
               break;
             }
             case Player.Position: {
-              if (elemPlayer.firstChild.firstChild.data.trim().length > 0) {
+              if (elemPlayer.firstChild.firstChild.data !== undefined &&
+                elemPlayer.firstChild.firstChild.data.trim().length > 0) {
                 process.stdout.write($('div', $(elemPlayer).html()).text().trim());
               } else {
                 const prcdPosition: string = $('div a', $(elemPlayer).html()).attr('title');
@@ -95,7 +98,9 @@ export const extract = (html: string): string => {
               break;
             }
             case Player.Nationality: {
-              $('div', $(elemPlayer).html()).find('a').each((index: number, elemPlayerNation: CheerioElement) => {
+              $('div', $(elemPlayer).html())
+              .find('a')
+              .each((index: number, elemPlayerNation: CheerioElement) => {
                 process.stdout.write(extractNation($(elemPlayerNation).attr('title')));
                 process.stdout.write(' ');
               });
@@ -108,21 +113,26 @@ export const extract = (html: string): string => {
               } else {
 
                 const underDiv = $('div', $(elemPlayer).html()).children();
-                process.stdout.write($('div a', $(elemPlayer).html()).attr('title'));
-                
-                switch(underDiv.length) {
+                // process.stdout.write($('div a', $(elemPlayer).html()).attr('title'));
+                // process.stdout.write(extractFormerTeam($('div', $(elemPlayer).html()).text()));
+                // process.stdout.write(extractFormerTeam($('div a', $(elemPlayer).html()).text()));
+
+                switch (underDiv.length) {
                   case FormerTeamFlag.Player: {
-                    
+                    process.stdout.write(extractFormerTeam($('div', $(elemPlayer).html()).text()));
                     break;
                   }
                   case FormerTeamFlag.WasCoach: {
-                    console.log(underDiv.length)
-                    console.log(underDiv);
+                    process.stdout.write(extractFormerTeam($('div', $(elemPlayer).html()).text()));
+                    console.log(underDiv.length);
+                    // console.log(underDiv);
                     break;
                   }
                   case FormerTeamFlag.WasPlayer: {
-                    console.log(underDiv.length)
-                    console.log(underDiv);
+                    process.stdout.write($('div a', $(elemPlayer).html()).attr('title'));
+                    process.stdout.write(extractFormerTeam($('div', $(elemPlayer).html()).text()));
+                    console.log(underDiv.length);
+                    // console.log(underDiv);
                     break;
                   }
                   default: {
@@ -138,6 +148,10 @@ export const extract = (html: string): string => {
             }
           }
         });
+        } catch (error) {
+          console.error('Player information detection error!');
+          console.error(error);
+        }
       }
     }
     console.log();

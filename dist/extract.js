@@ -25,7 +25,7 @@ exports.extract = (html) => {
     // tslint:disable-next-line: variable-name
     const processing_1 = $('div#__nuxt > div#__layout > div.app > div:nth-child(2) > article').children('div').eq(2);
     // tslint:disable-next-line: variable-name
-    const processing_2 = $('div.clearfix > div:nth-child(1) > div.w', processing_1.html()).children('div').eq(-2);
+    const processing_2 = $('div.clearfix > div:nth-child(1) > div.w', processing_1.html()).children('div').eq(11);
     // tslint:disable-next-line: variable-name
     const processing_3 = $('div.wiki-table-wrap table tbody', processing_2.html());
     const processed = processing_3.find('tr');
@@ -62,70 +62,87 @@ exports.extract = (html) => {
                 }
             }
             else { // 선수 이름
-                $(elem).find('td').each((index, elemPlayer) => {
-                    switch (index) {
-                        case Player.Name: {
-                            process.stdout.write($('div', $(elemPlayer).html()).text().trim());
-                            process.stdout.write(' ');
-                            break;
-                        }
-                        case Player.ID: {
-                            process.stdout.write($('div', $(elemPlayer).html()).text().trim());
-                            process.stdout.write(' ');
-                            break;
-                        }
-                        case Player.Position: {
-                            if (elemPlayer.firstChild.firstChild.data.trim().length > 0) {
+                try {
+                    $(elem)
+                        .find('td')
+                        .each((index, elemPlayer) => {
+                        switch (index) {
+                            case Player.Name: {
                                 process.stdout.write($('div', $(elemPlayer).html()).text().trim());
-                            }
-                            else {
-                                const prcdPosition = $('div a', $(elemPlayer).html()).attr('title');
-                                process.stdout.write(test_1.extractRole(prcdPosition));
-                            }
-                            process.stdout.write(' ');
-                            break;
-                        }
-                        case Player.Nationality: {
-                            $('div', $(elemPlayer).html()).find('a').each((index, elemPlayerNation) => {
-                                process.stdout.write(test_1.extractNation($(elemPlayerNation).attr('title')));
                                 process.stdout.write(' ');
-                            });
-                            break;
-                        }
-                        case Player.FormerTeam: {
-                            if ($(elem).attr('style') === 'background-color:#DFD;') { // 무적상태
-                                process.stdout.write('N/A');
+                                break;
                             }
-                            else {
-                                const underDiv = $('div', $(elemPlayer).html()).children();
-                                process.stdout.write($('div a', $(elemPlayer).html()).attr('title'));
-                                switch (underDiv.length) {
-                                    case FormerTeamFlag.Player: {
-                                        break;
-                                    }
-                                    case FormerTeamFlag.WasCoach: {
-                                        console.log(underDiv.length);
-                                        console.log(underDiv);
-                                        break;
-                                    }
-                                    case FormerTeamFlag.WasPlayer: {
-                                        console.log(underDiv.length);
-                                        console.log(underDiv);
-                                        break;
-                                    }
-                                    default: {
-                                        console.log('Player.FormerTeam Switch default!');
+                            case Player.ID: {
+                                process.stdout.write($('div', $(elemPlayer).html()).text().trim());
+                                process.stdout.write(' ');
+                                break;
+                            }
+                            case Player.Position: {
+                                if (elemPlayer.firstChild.firstChild.data !== undefined &&
+                                    elemPlayer.firstChild.firstChild.data.trim().length > 0) {
+                                    process.stdout.write($('div', $(elemPlayer).html()).text().trim());
+                                }
+                                else {
+                                    const prcdPosition = $('div a', $(elemPlayer).html()).attr('title');
+                                    process.stdout.write(test_1.extractRole(prcdPosition));
+                                }
+                                process.stdout.write(' ');
+                                break;
+                            }
+                            case Player.Nationality: {
+                                $('div', $(elemPlayer).html())
+                                    .find('a')
+                                    .each((index, elemPlayerNation) => {
+                                    process.stdout.write(test_1.extractNation($(elemPlayerNation).attr('title')));
+                                    process.stdout.write(' ');
+                                });
+                                break;
+                            }
+                            case Player.FormerTeam: {
+                                if ($(elem).attr('style') === 'background-color:#DFD;') { // 무적상태
+                                    process.stdout.write('N/A');
+                                }
+                                else {
+                                    const underDiv = $('div', $(elemPlayer).html()).children();
+                                    // process.stdout.write($('div a', $(elemPlayer).html()).attr('title'));
+                                    // process.stdout.write(extractFormerTeam($('div', $(elemPlayer).html()).text()));
+                                    // process.stdout.write(extractFormerTeam($('div a', $(elemPlayer).html()).text()));
+                                    switch (underDiv.length) {
+                                        case FormerTeamFlag.Player: {
+                                            process.stdout.write(test_1.extractFormerTeam($('div', $(elemPlayer).html()).text()));
+                                            break;
+                                        }
+                                        case FormerTeamFlag.WasCoach: {
+                                            process.stdout.write(test_1.extractFormerTeam($('div', $(elemPlayer).html()).text()));
+                                            console.log(underDiv.length);
+                                            // console.log(underDiv);
+                                            break;
+                                        }
+                                        case FormerTeamFlag.WasPlayer: {
+                                            process.stdout.write($('div a', $(elemPlayer).html()).attr('title'));
+                                            process.stdout.write(test_1.extractFormerTeam($('div', $(elemPlayer).html()).text()));
+                                            console.log(underDiv.length);
+                                            // console.log(underDiv);
+                                            break;
+                                        }
+                                        default: {
+                                            console.log('Player.FormerTeam Switch default!');
+                                        }
                                     }
                                 }
+                                process.stdout.write(' ');
+                                break;
                             }
-                            process.stdout.write(' ');
-                            break;
+                            default: {
+                                console.log('default');
+                            }
                         }
-                        default: {
-                            console.log('default');
-                        }
-                    }
-                });
+                    });
+                }
+                catch (error) {
+                    console.error('Player information detection error!');
+                    console.error(error);
+                }
             }
         }
         console.log();

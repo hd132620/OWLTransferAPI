@@ -20,4 +20,9 @@ function extractNation(str) {
     return forming[1].split(' ')[0];
 }
 exports.extractNation = extractNation;
+function extractFormerTeam(str) {
+    const forming = str.split('>');
+    return forming[forming.length - 1].trim();
+}
+exports.extractFormerTeam = extractFormerTeam;
 //# sourceMappingURL=test.js.map

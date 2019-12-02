@@ -22,3 +22,5 @@ export function extractFormerTeam(str: string): string {
   const forming: string[] = str.split('>');
   return forming[forming.length - 1].trim();
 }
+
+export const extractFormerTeamOp:(str:string) => string = extractFormerTeam;

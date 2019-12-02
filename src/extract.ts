@@ -1,5 +1,5 @@
 import { load } from 'cheerio';
-import { extractRole, extractNation, extractFormerTeam } from './test';
+import { extractRole, extractNation, extractFormerTeam, extractFormerTeamOp } from './test';
 
 enum Player {
   Name = 0,
@@ -119,18 +119,27 @@ export const extract = (html: string): string => {
 
                 switch (underDiv.length) {
                   case FormerTeamFlag.Player: {
-                    process.stdout.write(extractFormerTeam($('div', $(elemPlayer).html()).text()));
+                    process.stdout.write(
+                      extractFormerTeam($('div', $(elemPlayer).html()).text()));
                     break;
                   }
                   case FormerTeamFlag.WasCoach: {
-                    process.stdout.write(extractFormerTeam($('div', $(elemPlayer).html()).text()));
+
+                    process.stdout.write(
+                      extractFormerTeam($('div a', $(elemPlayer).html()).text()));
+                    process.stdout.write(' ');
+                    process.stdout.write(
+                      extractFormerTeamOp($('div span', $(elemPlayer).html()).text()));
                     console.log(underDiv.length);
                     // console.log(underDiv);
                     break;
                   }
                   case FormerTeamFlag.WasPlayer: {
-                    process.stdout.write($('div a', $(elemPlayer).html()).attr('title'));
-                    process.stdout.write(extractFormerTeam($('div', $(elemPlayer).html()).text()));
+                    process.stdout.write(
+                      $('div a', $(elemPlayer).html()).attr('title'));
+                    process.stdout.write(' ');
+                    process.stdout.write(
+                      extractFormerTeamOp($('div', $(elemPlayer).html()).text()));
                     console.log(underDiv.length);
                     // console.log(underDiv);
                     break;

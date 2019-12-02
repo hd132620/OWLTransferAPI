@@ -25,4 +25,5 @@ function extractFormerTeam(str) {
     return forming[forming.length - 1].trim();
 }
 exports.extractFormerTeam = extractFormerTeam;
+exports.extractFormerTeamOp = extractFormerTeam;
 //# sourceMappingURL=test.js.map

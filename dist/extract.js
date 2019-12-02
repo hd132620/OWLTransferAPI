@@ -113,14 +113,17 @@ exports.extract = (html) => {
                                             break;
                                         }
                                         case FormerTeamFlag.WasCoach: {
-                                            process.stdout.write(test_1.extractFormerTeam($('div', $(elemPlayer).html()).text()));
+                                            process.stdout.write(test_1.extractFormerTeam($('div a', $(elemPlayer).html()).text()));
+                                            process.stdout.write(' ');
+                                            process.stdout.write(test_1.extractFormerTeamOp($('div span', $(elemPlayer).html()).text()));
                                             console.log(underDiv.length);
                                             // console.log(underDiv);
                                             break;
                                         }
                                         case FormerTeamFlag.WasPlayer: {
                                             process.stdout.write($('div a', $(elemPlayer).html()).attr('title'));
-                                            process.stdout.write(test_1.extractFormerTeam($('div', $(elemPlayer).html()).text()));
+                                            process.stdout.write(' ');
+                                            process.stdout.write(test_1.extractFormerTeamOp($('div', $(elemPlayer).html()).text()));
                                             console.log(underDiv.length);
                                             // console.log(underDiv);
                                             break;

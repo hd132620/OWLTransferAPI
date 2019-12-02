@@ -1,12 +1,13 @@
 import express from 'express';
 import { crawl } from './crawl';
 import { extract } from './extract';
+import { OWLTransferIfm } from './OWLTranferIfm';
 
 const router = express.Router();
 
 router.get('/', async (req: express.Request, res: express.Response) => {
   const result = await crawl();
-  const extracted: string = extract(result);
+  const extracted: OWLTransferIfm = extract(result);
   // console.log(extracted);
   res.send(extracted);
 });

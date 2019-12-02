@@ -1,4 +1,4 @@
-export function extractRole(str: string): string {
+export function extractRoleText(str: string): string {
   const forming: string[] = str.split('_');
   switch (forming[forming.length - 1].split('.')[0]) {
     case 'offense': {
@@ -13,14 +13,14 @@ export function extractRole(str: string): string {
   }
 }
 
-export function extractNation(str: string): string {
+export function extractNationText(str: string): string {
   const forming: string[] = str.split(':');
   return forming[1].split(' ')[0];
 }
 
-export function extractFormerTeam(str: string): string {
+export function extractFormerTeamText(str: string): string {
   const forming: string[] = str.split('>');
   return forming[forming.length - 1].trim();
 }
 
-export const extractFormerTeamOp:(str:string) => string = extractFormerTeam;
+export const extractFormerTeamOpText:(str:string) => string = extractFormerTeamText;

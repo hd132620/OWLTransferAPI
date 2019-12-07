@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const cheerio_1 = require("cheerio");
 const OWLTranferIfm_1 = require("./OWLTranferIfm");
 const extractMain_1 = require("./extractMain");
-const ifm = new OWLTranferIfm_1.OWLTransferIfm();
 exports.extract = (html) => {
     if (html === '')
         return;
+    const ifm = new OWLTranferIfm_1.OWLTransferIfm();
     const $ = cheerio_1.load(html);
     const processed = extractMain_1.extractTr(html);
     processed.each((index, elem) => {

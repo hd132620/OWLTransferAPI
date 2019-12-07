@@ -2,10 +2,10 @@ import { load } from 'cheerio';
 import { OWLTransferIfm, OWLTransfer } from './OWLTranferIfm';
 import { extractTr, extractTeam, extractPerson } from './extractMain';
 
-const ifm: OWLTransferIfm = new OWLTransferIfm();
-
 export const extract = (html: string): OWLTransferIfm => {
   if (html === '') return;
+
+  const ifm: OWLTransferIfm = new OWLTransferIfm();
 
   const $ = load(html);
 

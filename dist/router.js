@@ -15,13 +15,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const crawl_1 = require("./crawl");
 const extract_1 = require("./extract");
+const app_1 = require("./app");
 const router = express_1.default.Router();
 router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield crawl_1.crawl();
     const extracted = extract_1.extract(result);
     // console.log(extracted);
-    extracted.update();
     res.send(extracted);
+}));
+router.get('/upload', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield crawl_1.crawl();
+        const extracted = extract_1.extract(result);
+        const ref = app_1.db.collection('data').doc('lastest');
+        ref.set(JSON.parse(JSON.stringify(extracted)));
+        res.status(200);
+        res.send({ reference: ref });
+    }
+    catch (e) {
+        console.log(e);
+        res.status(500);
+        res.send({ error_message: e.message });
+    }
 }));
 module.exports = router;
 //# sourceMappingURL=router.js.map

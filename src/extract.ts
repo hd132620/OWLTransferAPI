@@ -1,5 +1,5 @@
 import { load } from 'cheerio';
-import { OWLTransferIfm } from './OWLTranferIfm';
+import { OWLTransferIfm, OWLTransfer } from './OWLTranferIfm';
 import { extractTr, extractTeam, extractPerson } from './extractMain';
 
 const ifm: OWLTransferIfm = new OWLTransferIfm();
@@ -27,5 +27,6 @@ export const extract = (html: string): OWLTransferIfm => {
       }
     }
   });
+  ifm.update();
   return ifm;
 };

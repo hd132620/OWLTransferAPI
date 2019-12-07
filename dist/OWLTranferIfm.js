@@ -17,8 +17,9 @@ class OWLTransfer {
     }
 }
 exports.OWLTransfer = OWLTransfer;
-class OWLTransferIfm {
+class OWLTransferIfm extends Object {
     constructor() {
+        super();
         this.updated = null;
         this.data = [];
     }

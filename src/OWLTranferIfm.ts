@@ -26,11 +26,12 @@ export class OWLTransfer {
 
 }
 
-export class OWLTransferIfm {
+export class OWLTransferIfm extends Object{
   updated: Date;
   data: OWLTransfer[];
 
   constructor() {
+    super();
     this.updated = null;
     this.data = [];
   }
@@ -47,4 +48,11 @@ export class OWLTransferIfm {
   pushPerson(person: OWLTransferPerson) {
     this.data[this.data.length - 1].archive.push(person);
   }
+
+  // toJSON() {
+  //   return {
+  //     'updated': this.updated.toDateString,
+  //     'data': this.data.toString,
+  //   };
+  // }
 }

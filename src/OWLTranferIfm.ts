@@ -13,6 +13,14 @@ export class OWLTransferPerson {
   position: string;
   nationality: string[];
   formerTeam: OWLFormerTeam;
+
+  constructor() {
+    this.name = '';
+    this.id = '';
+    this.position = '';
+    this.nationality = [];
+    this.formerTeam = new OWLFormerTeam();
+  }
 }
 
 export class OWLTransfer {
@@ -27,19 +35,19 @@ export class OWLTransfer {
 }
 
 export class OWLTransferIfm extends Object{
-  updated: Date;
+  // updated: Date;
   data: OWLTransfer[];
 
   constructor() {
     super();
-    this.updated = null;
+    // this.updated = null;
     this.data = [];
   }
 
-  update() {
-    this.updated = new Date();
-    this.updated.setHours(this.updated.getHours() + 9);
-  }
+  // update() {
+  //   this.updated = new Date();
+  //   this.updated.setHours(this.updated.getHours() + 9);
+  // }
 
   pushTeam(str: string) {
     this.data.push(new OWLTransfer(str));

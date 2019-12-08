@@ -12,6 +12,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const admin = __importStar(require("firebase-admin"));
+const upload_1 = require("./upload");
 const app = express_1.default();
 const serviceAccount = require('../../../owltransfer2020-firebase-adminsdk-h6o7i-364f08ab86.json');
 admin.initializeApp({
@@ -20,6 +21,7 @@ admin.initializeApp({
 exports.db = admin.firestore();
 app.use(require('./router'));
 app.listen(3000, () => {
-    console.log('Example app listening on port 3000!');
+    console.log('Server listening on port 3000!');
 });
+upload_1.autoUpload();
 //# sourceMappingURL=app.js.map

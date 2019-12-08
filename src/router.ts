@@ -1,29 +1,35 @@
 import express from 'express';
-import { crawl } from './crawl';
-import { extract } from './extract';
-import { OWLTransferIfm } from './OWLTranferIfm';
 import { db } from './app';
+import { getInformation } from './information';
 
 const router = express.Router();
 
 router.get('/', async (req: express.Request, res: express.Response) => {
-  const result = await crawl();
-  const extracted: OWLTransferIfm = extract(result);
-  // console.log(extracted);
-  res.send(extracted);
+  const dataRef = db.collection('data').doc('lastest');
+  dataRef.get()
+  .then((doc) => {
+    if (!doc.exists) {
+      console.log('No such document!');
+    } else {
+      console.log('Document data:', JSON.stringify(doc.data()));
+      res.send(JSON.parse(JSON.stringify(doc.data())));
+    }
+  })
+  .catch((err) => {
+    console.log('Error getting document', err);
+    res.status(500);
+    res.send({ error_message: err.message });
+  });
 });
 
 router.get('/upload', async (req: express.Request, res: express.Response) => {
   try {
-    const result = await crawl();
-    const extracted: OWLTransferIfm = extract(result);
-
     const ref = db.collection('data').doc('lastest');
-
-    ref.set(JSON.parse(JSON.stringify(extracted)));
-
+    const ifm = await getInformation();
+    
+    ref.set(ifm);
     res.status(200);
-    res.send({ reference: ref });
+    res.send({ sentData: ifm, reference: ref });
   } catch (e) {
     console.log(e);
     res.status(500);

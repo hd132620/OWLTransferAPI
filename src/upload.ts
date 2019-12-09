@@ -3,6 +3,7 @@ import { getInformation } from './information';
 
 import fs from 'fs';
 import * as admin from 'firebase-admin';
+import { logger } from './config/winston';
 
 const setting = require('../setting.json');
 
@@ -11,15 +12,17 @@ let repeater: NodeJS.Timeout;
 let currentSetting: any;
 
 const autoUploadMain = async () => {
-  console.log(`${new Date().toLocaleString()} ${a}`);
-  a += 1;
+  logger.info(`Upload start ${a}`);
 
   try {
     const ref = db.collection('data').doc('lastest');
     ref.set(await getInformation());
-    console.log(`Upload success ${new Date().toLocaleString()} ${a}`);
+
+    logger.info(`Upload success ${a}`);
   } catch (e) {
-    console.error(e);
+    logger.info(`Upload fail! ${a}`);
+    logger.error(e);
+
     const errRef = db.collection('log').doc('uploadFail');
     errRef.update({
       log: admin.firestore.FieldValue.arrayUnion({
@@ -28,7 +31,7 @@ const autoUploadMain = async () => {
       }),
     });
   }
-
+  a += 1;
 };
 
 const autoUploadInside = (beforeInterval: any) => {

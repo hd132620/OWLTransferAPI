@@ -23,20 +23,19 @@ const app_1 = require("./app");
 const information_1 = require("./information");
 const fs_1 = __importDefault(require("fs"));
 const admin = __importStar(require("firebase-admin"));
+const winston_1 = require("./config/winston");
 const setting = require('../setting.json');
 let a = 1;
 let repeater;
 let currentSetting;
 const autoUploadMain = () => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(`${new Date().toLocaleString()} ${a}`);
-    a += 1;
     try {
         const ref = app_1.db.collection('data').doc('lastest');
         ref.set(yield information_1.getInformation());
-        console.log(`Upload success ${new Date().toLocaleString()} ${a}`);
+        winston_1.logger.info(`Upload success ${a}`);
     }
     catch (e) {
-        console.error(e);
+        winston_1.logger.error(e);
         const errRef = app_1.db.collection('log').doc('uploadFail');
         errRef.update({
             log: admin.firestore.FieldValue.arrayUnion({
@@ -45,6 +44,7 @@ const autoUploadMain = () => __awaiter(void 0, void 0, void 0, function* () {
             }),
         });
     }
+    a += 1;
 });
 const autoUploadInside = (beforeInterval) => {
     currentSetting = JSON.parse(fs_1.default.readFileSync('./setting.json', 'utf8'));

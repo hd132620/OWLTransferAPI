@@ -15,13 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const app_1 = require("./app");
 const information_1 = require("./information");
+const winston_1 = require("./config/winston");
 const router = express_1.default.Router();
 router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const dataRef = app_1.db.collection('data').doc('lastest');
     dataRef.get()
         .then((doc) => {
         if (!doc.exists) {
-            console.log('No such document!');
+            winston_1.logger.info('No such document!');
         }
         else {
             console.log('Document data:', JSON.stringify(doc.data()));
@@ -29,7 +30,7 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
     })
         .catch((err) => {
-        console.log('Error getting document', err);
+        winston_1.logger.error('Error getting document', err);
         res.status(500);
         res.send({ error_message: err.message });
     });
@@ -44,6 +45,7 @@ router.get('/upload', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
     catch (e) {
         console.log(e);
+        winston_1.logger.error(e);
         res.status(500);
         res.send({ error_message: e.message });
     }

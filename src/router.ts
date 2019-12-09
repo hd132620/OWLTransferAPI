@@ -12,7 +12,6 @@ router.get('/', async (req: express.Request, res: express.Response) => {
     if (!doc.exists) {
       logger.info('No such document!');
     } else {
-      console.log('Document data:', JSON.stringify(doc.data()));
       res.send(JSON.parse(JSON.stringify(doc.data())));
     }
   })

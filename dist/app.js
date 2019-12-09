@@ -15,18 +15,19 @@ const admin = __importStar(require("firebase-admin"));
 const upload_1 = require("./upload");
 const morgan_1 = __importDefault(require("morgan"));
 const winston_1 = require("./config/winston");
-const body_parser_1 = __importDefault(require("body-parser"));
 const app = express_1.default();
+winston_1.logger.info('Server start');
 const serviceAccount = require('../../../owltransfer2020-firebase-adminsdk-h6o7i-364f08ab86.json');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
 });
 exports.db = admin.firestore();
-app.use(body_parser_1.default.json());
+winston_1.logger.info('Firebase db certification success');
+app.use(express_1.default.json());
 app.use(morgan_1.default('combined', { stream: winston_1.stream }));
 app.use(require('./router'));
 app.listen(3000, () => {
-    console.log('Server listening on port 3000!');
+    winston_1.logger.info('Server listening on port 3000!');
 });
 upload_1.autoUpload();
 //# sourceMappingURL=app.js.map

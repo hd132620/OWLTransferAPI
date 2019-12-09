@@ -25,7 +25,6 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             winston_1.logger.info('No such document!');
         }
         else {
-            console.log('Document data:', JSON.stringify(doc.data()));
             res.send(JSON.parse(JSON.stringify(doc.data())));
         }
     })

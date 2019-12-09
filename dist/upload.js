@@ -29,12 +29,14 @@ let a = 1;
 let repeater;
 let currentSetting;
 const autoUploadMain = () => __awaiter(void 0, void 0, void 0, function* () {
+    winston_1.logger.info(`Upload start ${a}`);
     try {
         const ref = app_1.db.collection('data').doc('lastest');
         ref.set(yield information_1.getInformation());
         winston_1.logger.info(`Upload success ${a}`);
     }
     catch (e) {
+        winston_1.logger.info(`Upload fail! ${a}`);
         winston_1.logger.error(e);
         const errRef = app_1.db.collection('log').doc('uploadFail');
         errRef.update({

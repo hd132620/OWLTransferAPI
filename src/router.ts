@@ -63,7 +63,7 @@ router.get('/setting/autoUpload/:flag', (req: express.Request, res: express.Resp
       setting = JSON.parse(data);
       try {
         setting['autoUpload'] = flag;
-        fs.writeFile('./setting.json', JSON.stringify(setting), 'utf8', (err) => {
+        fs.writeFile('./setting.json', JSON.stringify(setting, null, 4), 'utf8', (err) => {
           res.status(200).send({ beforeData: JSON.parse(data), afterData: setting });
         });
       } catch (err) {
@@ -87,7 +87,7 @@ router.get('/setting/:id', (req: express.Request, res: express.Response) => {
       setting = JSON.parse(data);
       try {
         setting[req.params.id] = req.query.value;
-        fs.writeFile('./setting.json', JSON.stringify(setting), 'utf8', (err) => {
+        fs.writeFile('./setting.json', JSON.stringify(setting, null, 4), 'utf8', (err) => {
           res.status(200).send({ beforeData: JSON.parse(data), afterData: setting });
         });
       } catch (err) {

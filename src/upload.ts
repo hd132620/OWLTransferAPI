@@ -37,7 +37,7 @@ const autoUploadMain = async () => {
 const autoUploadInside = (beforeInterval: any) => {
 
   currentSetting = JSON.parse(fs.readFileSync('./setting.json', 'utf8'));
-
+  // currentSetting.autoUpload = (currentSetting.autoUpload === 'true');
   if (currentSetting.autoUpload) {
     autoUploadMain();
   }

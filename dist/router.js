@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const app_1 = require("./app");
 const information_1 = require("./information");
 const winston_1 = require("./config/winston");
+const fs_1 = __importDefault(require("fs"));
 const router = express_1.default.Router();
 router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const dataRef = app_1.db.collection('data').doc('lastest');
@@ -49,5 +50,62 @@ router.get('/upload', (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.send({ error_message: e.message });
     }
 }));
+router.get('/setting/autoUpload/:flag', (req, res) => {
+    let setting;
+    let reqFlag;
+    let flag;
+    reqFlag = req.params.flag;
+    if (reqFlag === 'true' || reqFlag === 'false' || reqFlag === 'on' || reqFlag === 'off') {
+        flag = reqFlag === 'true' || reqFlag === 'on' ? true : false;
+    }
+    else {
+        res.status(400).send({ error: `${flag} is neither true nor false. You can send flag only 'true/false, on/off'` });
+    }
+    fs_1.default.readFile('./setting.json', 'utf8', (err, data) => {
+        if (err) {
+            winston_1.logger.error(err);
+            res.status(500);
+            res.send({ error_message: err.message });
+        }
+        else {
+            setting = JSON.parse(data);
+            try {
+                setting['autoUpload'] = flag;
+                fs_1.default.writeFile('./setting.json', JSON.stringify(setting), 'utf8', (err) => {
+                    res.status(200).send({ beforeData: JSON.parse(data), afterData: setting });
+                });
+            }
+            catch (err) {
+                winston_1.logger.error(err);
+                res.status(500);
+                res.send({ error_message: err.message });
+            }
+        }
+    });
+});
+router.get('/setting/:id', (req, res) => {
+    let setting;
+    fs_1.default.readFile('./setting.json', 'utf8', (err, data) => {
+        if (err) {
+            winston_1.logger.error(err);
+            res.status(500);
+            res.send({ error_message: err.message });
+        }
+        else {
+            setting = JSON.parse(data);
+            try {
+                setting[req.params.id] = req.query.value;
+                fs_1.default.writeFile('./setting.json', JSON.stringify(setting), 'utf8', (err) => {
+                    res.status(200).send({ beforeData: JSON.parse(data), afterData: setting });
+                });
+            }
+            catch (err) {
+                winston_1.logger.error(err);
+                res.status(500);
+                res.send({ error_message: err.message });
+            }
+        }
+    });
+});
 module.exports = router;
 //# sourceMappingURL=router.js.map

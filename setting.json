@@ -1,4 +1,1 @@
-{
-    "autoUpload": true,
-    "uploadInterval": 10000
-}
+{"autoUpload":false,"uploadInterval":"10000"}

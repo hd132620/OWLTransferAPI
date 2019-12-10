@@ -50,6 +50,7 @@ const autoUploadMain = () => __awaiter(void 0, void 0, void 0, function* () {
 });
 const autoUploadInside = (beforeInterval) => {
     currentSetting = JSON.parse(fs_1.default.readFileSync('./setting.json', 'utf8'));
+    // currentSetting.autoUpload = (currentSetting.autoUpload === 'true');
     if (currentSetting.autoUpload) {
         autoUploadMain();
     }

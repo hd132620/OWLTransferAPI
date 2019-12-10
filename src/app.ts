@@ -20,7 +20,7 @@ export const db = admin.firestore();
 logger.info('Firebase db certification success');
 
 app.use(express.json());
-app.use(morgan('combined', { stream }));
+app.use(morgan('short', { stream }));
 app.use(require('./router'));
 
 app.listen(3000, () => {

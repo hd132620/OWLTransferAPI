@@ -24,7 +24,7 @@ admin.initializeApp({
 exports.db = admin.firestore();
 winston_1.logger.info('Firebase db certification success');
 app.use(express_1.default.json());
-app.use(morgan_1.default('combined', { stream: winston_1.stream }));
+app.use(morgan_1.default('short', { stream: winston_1.stream }));
 app.use(require('./router'));
 app.listen(3000, () => {
     winston_1.logger.info('Server listening on port 3000!');

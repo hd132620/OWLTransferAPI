@@ -45,6 +45,7 @@ export const extract = (html: string) =>
     if (ifm.data.length !== 0) {
       resolve(ifm);
     } else {
+      console.error('Data is empty - extract');
       reject(new Error('Data is empty - extract'));
     }
   });
